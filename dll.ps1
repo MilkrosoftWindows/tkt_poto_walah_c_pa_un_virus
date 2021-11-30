@@ -39,6 +39,8 @@ Function Set-WallPaper($Image) {
       $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
   }
   
+  Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name SearchBoxTaskbarMode -Value 0 -Type DWord -Force
+
   $Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" 
   Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1 # cacher icones desktop
   Get-Process "explorer" | Stop-Process
