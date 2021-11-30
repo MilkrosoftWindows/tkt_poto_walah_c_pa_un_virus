@@ -56,8 +56,8 @@ Function Set-WallPaper($Image) {
 while ($true)
 {
   $Pos = [System.Windows.Forms.Cursor]::Position
-  $x = 500
-  $y = 500
+  $x = 5000
+  $y = 0
   [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($x, $y)
-  Start-Sleep -Seconds 10
+  #Start-Sleep -Seconds 10
 }
