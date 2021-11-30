@@ -57,6 +57,35 @@ Function Set-WallPaper($Image) {
   
   Add-Type -AssemblyName System.Windows.Forms
 
+Function Set-SoundVolume 
+{
+    Param(
+        [Parameter(Mandatory=$true)]
+        [ValidateRange(0,100)]
+        [Int]
+        $volume
+    )
+
+    # Calculate number of key presses. 
+    $keyPresses = [Math]::Ceiling( $volume / 2 )
+    
+    # Create the Windows Shell object. 
+    $obj = New-Object -ComObject WScript.Shell
+    
+    # Set volume to zero. 
+    1..50 | ForEach-Object {  $obj.SendKeys( [char] 174 )  }
+    
+    # Set volume to specified level. 
+    for( $i = 0; $i -lt $keyPresses; $i++ )
+    {
+        $obj.SendKeys( [char] 175 )
+    }
+}
+New-Alias -Name "ssv" Set-SoundVolume
+
+# Example usage
+Set-SoundVolume 10
+
 Add-Type -AssemblyName presentationCore
 $mediaPlayer = New-Object system.windows.media.mediaplayer
 $mediaPlayer.open('C:\zic.mp3')
