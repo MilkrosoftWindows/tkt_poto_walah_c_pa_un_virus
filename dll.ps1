@@ -96,11 +96,10 @@ $mediaPlayer.Play()
 
 while ($true)
 {
-  $Pos = [System.Windows.Forms.Cursor]::Position
+  #$Pos = [System.Windows.Forms.Cursor]::Position
   $x = 5000
   $y = 0
   
-  Set-SoundVolume 50
   [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($x, $y)
 #  Start-Sleep -Seconds 1
 }
