@@ -30,7 +30,7 @@ Function Set-WallPaper($Image) {
   
   
   # desactiver inputs
-  code = @"
+  $code = @"
     [DllImport("user32.dll")]
     public static extern bool BlockInput(bool fBlockIt);
 "@
