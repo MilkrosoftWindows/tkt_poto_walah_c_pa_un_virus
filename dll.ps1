@@ -18,6 +18,20 @@ function Disable-UserInput($seconds) {
 
 Disable-UserInput -seconds 30 | Out-Null
 #>
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+
+$code = @"
+    [DllImport("user32.dll")]
+    public static extern bool BlockInput(bool fBlockIt);
+"@
+
+$userInput = Add-Type -MemberDefinition $code -Name UserInput -Namespace UserInput -PassThru
+
+function Disable-UserInput($seconds) {
+    $userInput::BlockInput($true)
+    Start-Sleep $seconds
+    $userInput::BlockInput($false)
+}
 
 # fonction pour changer le fond d'ecran
 Function Set-WallPaper($Image) {
@@ -84,22 +98,20 @@ Function Set-SoundVolume
         $obj.SendKeys( [char] 175 )
     }
 }
-New-Alias -Name "ssv" Set-SoundVolume
-
 # Example usage
 Set-SoundVolume 100
 
+# Jouer Musique
 Add-Type -AssemblyName presentationCore
 $mediaPlayer = New-Object system.windows.media.mediaplayer
 $mediaPlayer.open('C:\zic.mp3')
 $mediaPlayer.Play()
 
+
+Disable-UserInput -seconds 30 | Out-Null
+
 while ($true)
 {
-  #$Pos = [System.Windows.Forms.Cursor]::Position
-  $x = 5000
-  $y = 0
-  
-  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($x, $y)
+  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point(5000, 0) # set pos souris (5000,0)
 #  Start-Sleep -Seconds 1
 }
