@@ -1,8 +1,6 @@
   Function Set-WallPaper($Image) {
-  DigiKeyboardFr.delay(500);
    New-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name WallpaperStyle -PropertyType String -Value \"10\"  -Force 
   Add-Type -TypeDefinition @\" ")); 
-  DigiKeyboardFr.sendKeyStroke(KEY_ENTER);
   using System; 
   using System.Runtime.InteropServices;
   public class Params 
@@ -21,5 +19,4 @@
   $Path=\"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" 
   Set-ItemProperty -Path $Path -Name \"HideIcons\" -Value 1 
   Get-Process \"explorer\" | Stop-Process "));
-  // taskkill /F /IM explorer.exe
   Set-WallPaper -Image \"C:\\system32.png\"
