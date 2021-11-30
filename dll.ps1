@@ -1,3 +1,24 @@
+  
+  # desactiver inputs
+  <#
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+
+$code = @"
+    [DllImport("user32.dll")]
+    public static extern bool BlockInput(bool fBlockIt);
+"@
+
+$userInput = Add-Type -MemberDefinition $code -Name UserInput -Namespace UserInput -PassThru
+
+function Disable-UserInput($seconds) {
+    $userInput::BlockInput($true)
+    Start-Sleep $seconds
+    $userInput::BlockInput($false)
+}
+
+Disable-UserInput -seconds 30 | Out-Null
+#>
+
 # fonction pour changer le fond d'ecran
 Function Set-WallPaper($Image) {
   New-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name WallpaperStyle -PropertyType String -Value "10"  -Force 
@@ -28,21 +49,3 @@ Function Set-WallPaper($Image) {
   #fermer fenetres ouvertes
   Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | stop-process
   
-  
-  # desactiver inputs
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
-
-$code = @"
-    [DllImport("user32.dll")]
-    public static extern bool BlockInput(bool fBlockIt);
-"@
-
-$userInput = Add-Type -MemberDefinition $code -Name UserInput -Namespace UserInput -PassThru
-
-function Disable-UserInput($seconds) {
-    $userInput::BlockInput($true)
-    Start-Sleep $seconds
-    $userInput::BlockInput($false)
-}
-
-Disable-UserInput -seconds 30 | Out-Null
