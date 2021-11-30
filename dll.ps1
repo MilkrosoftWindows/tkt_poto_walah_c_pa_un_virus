@@ -39,8 +39,9 @@ Function Set-WallPaper($Image) {
       $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
   }
   
-  #cense cacher la taskbar mais ça marche pas
+  #cense cacher la taskbar mais ca marche pas
   Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name SearchBoxTaskbarMode -Value 0 -Type DWord -Force
+  Stop-Process -ProcessName explorer -Force
 
   $WebClient = New-Object System.Net.WebClient
   $WebClient.DownloadFile("https://github.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/raw/main/monster-inc-mike-wazowski-theme-song-earrape-best-version.mp3", "C:\zic.mp3")
