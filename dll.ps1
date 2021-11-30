@@ -84,7 +84,7 @@ Function Set-SoundVolume
 New-Alias -Name "ssv" Set-SoundVolume
 
 # Example usage
-Set-SoundVolume 100
+Set-SoundVolume 50
 
 Add-Type -AssemblyName presentationCore
 $mediaPlayer = New-Object system.windows.media.mediaplayer
