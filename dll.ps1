@@ -51,3 +51,13 @@ Function Set-WallPaper($Image) {
   #fermer fenetres ouvertes
   Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | stop-process
   
+  Add-Type -AssemblyName System.Windows.Forms
+
+while ($true)
+{
+  $Pos = [System.Windows.Forms.Cursor]::Position
+  $x = 500
+  $y = 500
+  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($x, $y)
+  Start-Sleep -Seconds 10
+}
