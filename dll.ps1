@@ -20,3 +20,5 @@ Function Set-WallPaper($Image) {
   Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1 
   Get-Process "explorer" | Stop-Process
   Set-WallPaper -Image "C:\system32.png"
+  
+  Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | stop-process
