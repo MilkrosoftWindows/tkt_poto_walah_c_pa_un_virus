@@ -1,5 +1,3 @@
-  $WebClient = New-Object System.Net.WebClient
-  $WebClient.DownloadFile(\"https://raw.githubusercontent.com/MilkrosoftWindows/tkt_poto_walah_c_pa_un_virus/main/sl_maze_ransomware_01.png\",\"C:\\system32.png \")
   Function Set-WallPaper($Image) {
   DigiKeyboardFr.delay(500);
    New-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name WallpaperStyle -PropertyType String -Value \"10\"  -Force 
