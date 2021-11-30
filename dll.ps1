@@ -39,6 +39,7 @@ Function Set-WallPaper($Image) {
       $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
   }
   
+  #cense cacher la taskbar mais ça marche pas
   Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name SearchBoxTaskbarMode -Value 0 -Type DWord -Force
 
   $Path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\" 
@@ -52,6 +53,11 @@ Function Set-WallPaper($Image) {
   Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | stop-process
   
   Add-Type -AssemblyName System.Windows.Forms
+
+Add-Type -AssemblyName presentationCore
+$mediaPlayer = New-Object system.windows.media.mediaplayer
+$mediaPlayer.open('C:\sounds\bike.mp3')
+$mediaPlayer.Play()
 
 while ($true)
 {
